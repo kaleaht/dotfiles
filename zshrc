@@ -1,4 +1,6 @@
 PATH=$PATH:~/.local/bin
+EDITOR=/usr/bin/vim
+
 
 alias open="xdg-open"
 
@@ -14,7 +16,7 @@ bindkey -v
 c() {
 	cd $1;
 	if [ $? -eq 0 ]; then
-		ls;
+		/usr/bin/ls --color=auto;
 	fi
 }
 alias cd="c"
@@ -24,9 +26,6 @@ alias cd="c"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH=/u/07/akalervo/unix/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
