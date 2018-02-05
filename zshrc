@@ -15,7 +15,7 @@ alias open="xdg-open"
 c() {
 	cd $1;
 	if [ $? -eq 0 ]; then
-		/usr/bin/ls --color=auto;
+		ls --color=auto;
 	fi
 }
 alias cd="c"
