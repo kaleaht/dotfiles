@@ -9,14 +9,14 @@ call vundle#begin()
 " list all plugins that you'd like to install here
  Plugin 'kien/ctrlp.vim' " fuzzy find files
  Plugin 'benmills/vimux'
- Plugin 'tpope/vim-commentary'
  Plugin 'tpope/vim-surround'
  Plugin 'christoomey/vim-tmux-navigator'
+ Plugin 'scrooloose/nerdtree'
 
  " Python
  Plugin 'davidhalter/jedi-vim'
  Plugin 'vim-python/python-syntax'
- Plugin 'wilywampa/vim-ipython'
+ Plugin 'wilywampa/vim-ipython' " Not working
  Plugin 'nvie/vim-flake8'
  Plugin 'tell-k/vim-autopep8'
 
