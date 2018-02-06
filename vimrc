@@ -1,29 +1,4 @@
 syntax on
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let vundle manage vundle
- Plugin 'gmarik/vundle'
-
-" list all plugins that you'd like to install here
- Plugin 'kien/ctrlp.vim' " fuzzy find files
- Plugin 'benmills/vimux'
- Plugin 'tpope/vim-commentary'
- Plugin 'tpope/vim-surround'
- Plugin 'christoomey/vim-tmux-navigator'
-
- " Python
- Plugin 'davidhalter/jedi-vim'
- Plugin 'vim-python/python-syntax'
- Plugin 'wilywampa/vim-ipython'
- Plugin 'nvie/vim-flake8'
- Plugin 'tell-k/vim-autopep8'
-
- " Comments
- Plugin 'scrooloose/nerdcommenter'
-
-call vundle#end()
 filetype plugin indent on
 
 colorscheme desert
@@ -41,6 +16,9 @@ noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
 
+" Airline symbols
+let g:airline_powerline_fonts = 1
+
 " noremap  <Up> ""
 " noremap! <Up> <Esc>
 " noremap  <Down> ""
@@ -55,10 +33,6 @@ set clipboard=unnamed
 
 " use tabs
 set autoindent noexpandtab tabstop=4 shiftwidth=4
-
-" latex
-let g:livepreview_previewer = 'evince'
-let g:livepreview_engine = 'pdflatex'
 
 let g:python_highlight_all = 1
 " set colorcolumn=80
