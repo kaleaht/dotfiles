@@ -36,3 +36,6 @@ set autoindent noexpandtab tabstop=4 shiftwidth=4
 
 let g:python_highlight_all = 1
 " set colorcolumn=80
+
+" Open NERDtree
+nnoremap <Leader>f :NERDTreeToggle<Enter>
