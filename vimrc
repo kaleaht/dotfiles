@@ -1,7 +1,12 @@
-syntax on
+syntax enable
 filetype plugin indent on
 
-colorscheme desert
+let g:solarized_bold=1
+let g:solarized_italic=1
+let g:solarized_underline=1
+set background=dark
+let g:solarized_termtrans=1
+colorscheme solarized
 
 " Line numbers
 set number
@@ -17,7 +22,7 @@ noremap <left> <nop>
 noremap <right> <nop>
 
 " Airline symbols
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 
 " noremap  <Up> ""
 " noremap! <Up> <Esc>
@@ -28,14 +33,16 @@ let g:airline_powerline_fonts = 1
 " noremap  <Right> ""
 " noremap! <Right> <Esc>
 
-" system clipboard
+" System clipboard
 set clipboard=unnamed
 
-" use tabs
+" Hide insert status
+set noshowmode
+
+" Use tabs
 set autoindent noexpandtab tabstop=4 shiftwidth=4
 
-let g:python_highlight_all = 1
-" set colorcolumn=80
+let g:python_highlight_all=1
 
 " Open NERDtree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
