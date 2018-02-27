@@ -1,33 +1,12 @@
-syntax on
-
-set rtp+=~/.vim/bundle/vundle
-call vundle#begin()
-
-" let vundle manage vundle
- Plugin 'gmarik/vundle'
-
-" list all plugins that you'd like to install here
- Plugin 'kien/ctrlp.vim' " fuzzy find files
- Plugin 'benmills/vimux'
- Plugin 'tpope/vim-surround'
- Plugin 'christoomey/vim-tmux-navigator'
- Plugin 'scrooloose/nerdtree'
-
- " Python
- Plugin 'davidhalter/jedi-vim'
- Plugin 'vim-python/python-syntax'
- Plugin 'wilywampa/vim-ipython' " Not working
- Plugin 'nvie/vim-flake8'
- Plugin 'tell-k/vim-autopep8'
- Plugin 'vim-airline/vim-airline'
-
- " Comments
- Plugin 'scrooloose/nerdcommenter'
-
-call vundle#end()
+syntax enable
 filetype plugin indent on
 
-colorscheme desert
+let g:solarized_bold=1
+let g:solarized_italic=1
+let g:solarized_underline=1
+set background=dark
+let g:solarized_termtrans=1
+colorscheme solarized
 
 " Line numbers
 set number
@@ -43,7 +22,7 @@ noremap <left> <nop>
 noremap <right> <nop>
 
 " Airline symbols
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 
 " noremap  <Up> ""
 " noremap! <Up> <Esc>
@@ -54,19 +33,19 @@ let g:airline_powerline_fonts = 1
 " noremap  <Right> ""
 " noremap! <Right> <Esc>
 
-" system clipboard
+" System clipboard
 set clipboard=unnamed
 
-" use tabs
+" Hide insert status
+set noshowmode
+
+" Use tabs
 set autoindent noexpandtab tabstop=4 shiftwidth=4
 
-" latex
-let g:livepreview_previewer = 'evince'
-let g:livepreview_engine = 'pdflatex'
-
-let g:python_highlight_all = 1
-" set colorcolumn=80
-nnoremap <Leader>f :NERDTreeToggle<Enter>
+let g:python_highlight_all=1
 
 " Latex compile on save
 autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
+
+" Open NERDtree
+nnoremap <Leader>f :NERDTreeToggle<Enter>

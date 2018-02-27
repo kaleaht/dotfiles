@@ -1,14 +1,12 @@
 PATH=$PATH:~/.local/bin
 EDITOR=/usr/bin/vim
 
-
 alias open="xdg-open"
 
 # Esc to CapsLock remap
-/usr/bin/setxkbmap -option "caps:swapescape"
+#/usr/bin/setxkbmap -option "caps:swapescape"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 #Functions
 # Custom cd
@@ -21,7 +19,6 @@ c() {
 alias cd="c"
 
 # OH MY ZSH
-
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -130,4 +127,4 @@ function zle-line-init zle-keymap-select {
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
-export KEYTIMEOUT=1 
+export KEYTIMEOUT=1
