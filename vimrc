@@ -1,6 +1,6 @@
 syntax on
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
 " let vundle manage vundle
@@ -19,6 +19,7 @@ call vundle#begin()
  Plugin 'wilywampa/vim-ipython' " Not working
  Plugin 'nvie/vim-flake8'
  Plugin 'tell-k/vim-autopep8'
+ Plugin 'vim-airline/vim-airline'
 
  " Comments
  Plugin 'scrooloose/nerdcommenter'
@@ -41,6 +42,9 @@ noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
 
+" Airline symbols
+let g:airline_powerline_fonts = 1
+
 " noremap  <Up> ""
 " noremap! <Up> <Esc>
 " noremap  <Down> ""
@@ -62,3 +66,7 @@ let g:livepreview_engine = 'pdflatex'
 
 let g:python_highlight_all = 1
 " set colorcolumn=80
+nnoremap <Leader>f :NERDTreeToggle<Enter>
+
+" Latex compile on save
+autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
