@@ -1,6 +1,7 @@
 syntax enable
 filetype plugin indent on
 
+" Color theme
 let g:solarized_bold=1
 let g:solarized_italic=1
 let g:solarized_underline=1
@@ -59,3 +60,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Spell check
+set spell spelllang=en_us
+hi SpellBad ctermbg=LightBlue
