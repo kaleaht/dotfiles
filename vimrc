@@ -46,3 +46,10 @@ let g:python_highlight_all=1
 
 " Open NERDtree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
+
+" Spell check
+set spell spelllang=en_us
+hi SpellBad cterm=underline ctermfg=red
+
+" vim-Jedi don't show popup
+autocmd FileType python setlocal completeopt-=preview
