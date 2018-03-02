@@ -1,6 +1,7 @@
 syntax enable
 filetype plugin indent on
 
+" Color theme
 let g:solarized_bold=1
 let g:solarized_italic=1
 let g:solarized_underline=1
@@ -44,12 +45,25 @@ set autoindent noexpandtab tabstop=4 shiftwidth=4
 
 let g:python_highlight_all=1
 
+" Latex compile on save
+autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
+
 " Open NERDtree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 
-" Spell check
-set spell spelllang=en_us
-hi SpellBad cterm=underline ctermfg=red
-
 " vim-Jedi don't show popup
 autocmd FileType python setlocal completeopt-=preview
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Spell check
+set spell spelllang=en_us
+hi SpellBad ctermbg=LightBlue
