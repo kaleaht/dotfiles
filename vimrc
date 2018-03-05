@@ -67,3 +67,9 @@ let g:syntastic_check_on_wq = 0
 " Spell check
 set spell spelllang=en_us
 hi SpellBad ctermbg=LightBlue
+
+" Backspace to work
+set backspace=indent,eol,start
+
+" Faster scroll
+set ttyfast
