@@ -73,3 +73,6 @@ set backspace=indent,eol,start
 
 " Faster scroll
 set ttyfast
+
+" Show cursor line
+set cursorline
