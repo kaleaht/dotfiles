@@ -16,23 +16,15 @@ set relativenumber
 " Leader key
 let mapleader = ","
 
+" vimgrep from project folder using the same file extension as the current.
+" buffer
+:command -nargs=1 Se execute 'vimgrep /<args>/ **/*.' . expand('%:e')
+
 " Disable arrow keys
 noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
-
-" Airline symbols
-let g:airline_powerline_fonts=1
-
-" noremap  <Up> ""
-" noremap! <Up> <Esc>
-" noremap  <Down> ""
-" noremap! <Down> <Esc>
-" noaemap  <Left> ""
-" noremap! <Left> <Esc>
-" noremap  <Right> ""
-" noremap! <Right> <Esc>
 
 " System clipboard
 set clipboard=unnamed
@@ -55,9 +47,9 @@ nnoremap <Leader>f :NERDTreeToggle<Enter>
 autocmd FileType python setlocal completeopt-=preview
 
 " Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
@@ -75,3 +67,16 @@ set backspace=indent,eol,start
 set ttyfast
 
 let g:UltiSnipsExpandTrigger="<c-j>"
+
+" Lua
+autocmd BufNewFile,BufRead *.lua set expandtab
+autocmd BufNewFile,BufRead *.lua set tabstop=3
+
+" incremental search
+set is
+
+" left space above and under the cursor
+set scrolloff=10
+
+" Show all 
+set wildmenu
