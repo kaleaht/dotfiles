@@ -1,6 +1,26 @@
 syntax enable
 filetype plugin indent on
 
+" Install for vim-plug
+if empty(glob('~/dotfiles/autoload/plug.vim'))
+ 	silent !curl -fLo ~/dotfiles/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	if empty(glob('~/.vim/autoload/'))
+		silent !mkdir ~/.vim/autoload/
+	endif
+ 	silent !ln -s ~/dotfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source ~/dotfiles/vimrc
+endif
+
+" Plugins
+call plug#begin('~/dotfiles/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'airblade/vim-gitgutter'
+Plug 'Valloric/YouCompleteMe'
+Plug 'w0rp/ale'
+call plug#end()
+
 " Color theme
 let g:solarized_bold=1
 let g:solarized_italic=1
@@ -18,7 +38,7 @@ let mapleader = ","
 
 " vimgrep from project folder using the same file extension as the current.
 " buffer
-:command -nargs=1 Se execute 'vimgrep /<args>/ **/*.' . expand('%:e')
+command! -nargs=1 Se execute 'vimgrep /<args>/ **/*.' . expand('%:e')
 
 " Disable arrow keys
 noremap <up> <nop>
@@ -46,16 +66,6 @@ nnoremap <Leader>f :NERDTreeToggle<Enter>
 " vim-Jedi don't show popup
 autocmd FileType python setlocal completeopt-=preview
 
-" Syntastic settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
 " Spell check
 set spell spelllang=en_us
 hi SpellBad ctermbg=LightBlue
@@ -73,10 +83,18 @@ autocmd BufNewFile,BufRead *.lua set expandtab
 autocmd BufNewFile,BufRead *.lua set tabstop=3
 
 " incremental search
-set is
+set incsearch
+" highlight matches
+set hlsearch  
 
 " left space above and under the cursor
 set scrolloff=10
 
 " Show all 
 set wildmenu
+
+" ALE
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['autopep8'],
+\}
