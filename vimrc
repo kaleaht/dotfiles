@@ -19,7 +19,25 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
 Plug 'w0rp/ale'
+Plug 'ericcurtin/CurtineIncSw.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
+
+" swap between header and source file
+map <F4> :call CurtineIncSw()<CR>
+
+if executable('ag')
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Color theme
 let g:solarized_bold=1
@@ -31,7 +49,7 @@ colorscheme solarized
 
 " Line numbers
 set number
-set relativenumber
+"set relativenumber
 
 " Leader key
 let mapleader = ","
@@ -47,7 +65,7 @@ noremap <left> <nop>
 noremap <right> <nop>
 
 " System clipboard
-set clipboard=unnamed
+"set clipboard=unnamed
 
 " Hide insert status
 set noshowmode
@@ -67,8 +85,8 @@ nnoremap <Leader>f :NERDTreeToggle<Enter>
 autocmd FileType python setlocal completeopt-=preview
 
 " Spell check
-set spell spelllang=en_us
-hi SpellBad ctermbg=LightBlue
+"set spell spelllang=en_us
+"hi SpellBad ctermbg=LightGray
 
 " Backspace to work
 set backspace=indent,eol,start
@@ -81,6 +99,9 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 " Lua
 autocmd BufNewFile,BufRead *.lua set expandtab
 autocmd BufNewFile,BufRead *.lua set tabstop=3
+
+autocmd BufNewFile,BufRead *.cpp set expandtab
+autocmd BufNewFile,BufRead *.cpp set tabstop=2
 
 " incremental search
 set incsearch
