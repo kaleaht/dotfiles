@@ -4,7 +4,7 @@ EDITOR=/usr/bin/vim
 alias open="xdg-open"
 
 # Esc to CapsLock remap
-#/usr/bin/setxkbmap -option "caps:swapescape"
+/usr/bin/setxkbmap -option "caps:swapescape"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
