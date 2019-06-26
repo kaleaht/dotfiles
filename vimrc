@@ -21,10 +21,9 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'w0rp/ale'
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
-
-" swap between header and source file
-map <F4> :call CurtineIncSw()<CR>
 
 if executable('ag')
 	" Use ag over grep
@@ -100,8 +99,6 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 autocmd BufNewFile,BufRead *.lua set expandtab
 autocmd BufNewFile,BufRead *.lua set tabstop=3
 
-autocmd BufNewFile,BufRead *.cpp set expandtab
-autocmd BufNewFile,BufRead *.cpp set tabstop=2
 
 " incremental search
 set incsearch
@@ -119,3 +116,7 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['autopep8'],
 \}
+
+" Language-specific stuff from your .vimrc file into a file named 
+" .vim/ftplugin/language.vim
+filetype plugin on
