@@ -37,6 +37,8 @@ endif
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+"nnoremap K :Ag <C-R><C-W><CR>
+nnoremap \ :Ag<SPACE>
 
 " Color theme
 let g:solarized_bold=1

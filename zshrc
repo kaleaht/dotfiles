@@ -4,7 +4,7 @@ EDITOR=/usr/bin/vim
 alias open="xdg-open"
 
 # Esc to CapsLock remap
-/usr/bin/setxkbmap -option "caps:swapescape"
+#/usr/bin/setxkbmap -option "caps:swapescape"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -128,3 +128,16 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == */home/ahti/.fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/home/ahti/.fzf/bin"
+fi
+
+# Auto-completion
+# ---------------
+[[ $- == *i* ]] && source "/home/ahti/.fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+# ------------
+source "/home/ahti/.fzf/shell/key-bindings.zsh"
