@@ -1,8 +1,8 @@
 " max line length
-set colorcolumn=80
+setlocal colorcolumn=80
 
-set expandtab
-set tabstop=2
+setlocal expandtab
+setlocal tabstop=2
 
 " swap between header and source file
 map <F4> :call CurtineIncSw()<CR>
