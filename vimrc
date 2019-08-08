@@ -122,3 +122,5 @@ let g:ale_fixers = {
 " Language-specific stuff from your .vimrc file into a file named 
 " .vim/ftplugin/language.vim
 filetype plugin on
+
+let g:ycm_global_ycm_extra_conf = '~/dotfiles/.ycm_extra_conf.py'
