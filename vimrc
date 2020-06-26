@@ -1,5 +1,19 @@
-syntax enable
+syntax on
 filetype plugin indent on
+set smartindent
+set nu
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+" Use tabs
+set autoindent noexpandtab tabstop=4 shiftwidth=4
+
+
+" Add [""]
+nnoremap ," ciw[""]<Esc>p
 
 " Install for vim-plug
 if empty(glob('~/dotfiles/autoload/plug.vim'))
@@ -11,14 +25,18 @@ if empty(glob('~/dotfiles/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source ~/dotfiles/vimrc
 endif
 
+"set path+=,/court/arm/include/QtCore
+
 " Plugins
 call plug#begin('~/dotfiles/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'airblade/vim-gitgutter'
-Plug 'Valloric/YouCompleteMe'
-Plug 'w0rp/ale'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'tpope/vim-fugitive'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'vim-syntastic/syntastic'
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -36,9 +54,9 @@ if executable('ag')
 endif
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ag! <C-R><C-W><CR>:cw<CR>
 "nnoremap K :Ag <C-R><C-W><CR>
-nnoremap \ :Ag<SPACE>
+nnoremap \ :Ag<CR>
 
 " Color theme
 let g:solarized_bold=1
@@ -55,6 +73,8 @@ set number
 " Leader key
 let mapleader = ","
 
+nnoremap <leader>e :Files<CR>
+
 " vimgrep from project folder using the same file extension as the current.
 " buffer
 command! -nargs=1 Se execute 'vimgrep /<args>/ **/*.' . expand('%:e')
@@ -69,10 +89,7 @@ noremap <right> <nop>
 "set clipboard=unnamed
 
 " Hide insert status
-set noshowmode
-
-" Use tabs
-set autoindent noexpandtab tabstop=4 shiftwidth=4
+"set noshowmode
 
 let g:python_highlight_all=1
 
@@ -83,7 +100,7 @@ autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 
 " vim-Jedi don't show popup
-autocmd FileType python setlocal completeopt-=preview
+"autocmd FileType python setlocal completeopt-=preview
 
 " Spell check
 "set spell spelllang=en_us
@@ -97,30 +114,63 @@ set ttyfast
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 
-" Lua
-autocmd BufNewFile,BufRead *.lua set expandtab
-autocmd BufNewFile,BufRead *.lua set tabstop=3
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <C-space> coc#refresh()
+
+" GoTo code navigation.
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>(coc-references)
+nmap <leader>rr <Plug>(coc-rename)
+nmap <leader>g[ <Plug>(coc-diagnostic-prev)
+nmap <leader>g] <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev-error)
+nmap <silent> <leader>gn <Plug>(coc-diagnostic-next-error)
+nnoremap <leader>cr :CocRestart
 
 
 " incremental search
 set incsearch
 " highlight matches
-set hlsearch  
+set hlsearch
 
 " left space above and under the cursor
 set scrolloff=10
 
-" Show all 
-set wildmenu
+" Show all
+"set wildmenu
 
 " ALE
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'python': ['autopep8'],
-\}
+"let g:ale_fixers = {
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+"\   'python': ['autopep8'],
+"\}
 
-" Language-specific stuff from your .vimrc file into a file named 
+let g:ale_completion_enabled = 1
+"set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_linters = {'cpp': ['gcc']}
+
+let g:ale_cpp_gcc_options = '-std=c++14 -Wall -I /court/arm/include/QtCore -I /court/arm/include -I /home/ahti/work/courtiusgroup/devices/trueline/gpu_shared'
+
+" Language-specific stuff from your .vimrc file into a file named
 " .vim/ftplugin/language.vim
 filetype plugin on
 
-let g:ycm_global_ycm_extra_conf = '~/dotfiles/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '~/dotfiles/.ycm_extra_conf.py'
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+autocmd BufWritePre * :call TrimWhitespace()
+
+
