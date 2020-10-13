@@ -9,7 +9,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 " Use tabs
-set autoindent noexpandtab tabstop=4 shiftwidth=4
+set autoindent expandtab tabstop=2 shiftwidth=2 softtabstop=4
 
 
 " Add [""]
@@ -39,6 +39,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'vim-syntastic/syntastic'
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'rhysd/vim-clang-format'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -59,12 +60,12 @@ nnoremap K :Ag! <C-R><C-W><CR>:cw<CR>
 nnoremap \ :Ag<CR>
 
 " Color theme
-let g:solarized_bold=1
-let g:solarized_italic=1
-let g:solarized_underline=1
-set background=dark
-let g:solarized_termtrans=1
-colorscheme solarized
+"let g:solarized_bold=1
+"let g:solarized_italic=1
+"let g:solarized_underline=1
+"set background=dark
+"let g:solarized_termtrans=1
+"colorscheme solarized
 
 " Line numbers
 set number
@@ -124,6 +125,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <C-space> coc#refresh()
 
 " GoTo code navigation.
+nmap <leader>gh :CocCommand clangd.switchSourceHeader<Enter>
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gy <Plug>(coc-type-definition)
 nmap <leader>gi <Plug>(coc-implementation)

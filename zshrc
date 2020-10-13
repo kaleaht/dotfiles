@@ -1,5 +1,6 @@
 PATH=$PATH:~/.local/bin
 EDITOR=/usr/bin/vim
+ZSH=~/.oh-my-zsh/
 
 alias open="xdg-open"
 
