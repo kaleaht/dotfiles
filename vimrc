@@ -37,6 +37,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'vim-syntastic/syntastic'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rhysd/vim-clang-format'
