@@ -60,17 +60,15 @@ nnoremap K :Ag! <C-R><C-W><CR>:cw<CR>
 "nnoremap K :Ag <C-R><C-W><CR>
 nnoremap \ :Ag<CR>
 
-" Color theme
-"let g:solarized_bold=1
-"let g:solarized_italic=1
-"let g:solarized_underline=1
-"set background=dark
-"let g:solarized_termtrans=1
-"colorscheme solarized
+" Colors
+set t_Co=16
+set background=dark
+colorscheme solarized
+
 
 " Line numbers
 set number
-"set relativenumber
+set relativenumber
 
 " Leader key
 let mapleader = ","
@@ -176,4 +174,4 @@ endfun
 
 autocmd BufWritePre * :call TrimWhitespace()
 
-
+let g:go_fmt_command = "goimports"

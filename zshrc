@@ -129,8 +129,9 @@ bindkey -v
 function zle-line-init zle-keymap-select {
 	VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
 	RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
-	zle reset-prompt
+  zle reset-prompt
 }
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1
@@ -147,3 +148,5 @@ fi
 # Key bindings
 # ------------
 source "/home/ahti/.fzf/shell/key-bindings.zsh"
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
