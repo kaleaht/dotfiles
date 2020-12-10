@@ -114,10 +114,21 @@ set ttyfast
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 
+" COC-VIM TAB SETTINGS START
+" https://dev.to/casonadams/neovim-auto-select-suggestions-using-coc-vim-3enk
+"
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
             \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
