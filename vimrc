@@ -8,9 +8,23 @@ set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
+" incremental search
+set incsearch
+" highlight matches
+set hlsearch
+" left space above and under the cursor
+set scrolloff=10
 " Use tabs
 set autoindent expandtab tabstop=2 shiftwidth=2 softtabstop=4
-
+" Backspace to work
+set backspace=indent,eol,start
+" Faster scroll
+set ttyfast
+" Line numbers
+set number
+set relativenumber
+" Leader key
+let mapleader = ","
 
 " Add [""]
 nnoremap ," ciw[""]<Esc>p
@@ -43,6 +57,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rhysd/vim-clang-format'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'mbbukk/undotree'
 call plug#end()
 
 if executable('ag')
@@ -56,7 +71,7 @@ if executable('ag')
 endif
 
 " bind K to grep word under cursor
-nnoremap K :Ag! <C-R><C-W><CR>:cw<CR>
+nnoremap <leader>k :Ag! <C-R><C-W><CR>:cw<CR>
 "nnoremap K :Ag <C-R><C-W><CR>
 nnoremap \ :Ag<CR>
 
@@ -64,14 +79,6 @@ nnoremap \ :Ag<CR>
 set t_Co=16
 set background=dark
 colorscheme solarized
-
-
-" Line numbers
-set number
-set relativenumber
-
-" Leader key
-let mapleader = ","
 
 nnoremap <leader>e :Files<CR>
 
@@ -105,12 +112,6 @@ nnoremap <Leader>f :NERDTreeToggle<Enter>
 " Spell check
 "set spell spelllang=en_us
 "hi SpellBad ctermbg=LightGray
-
-" Backspace to work
-set backspace=indent,eol,start
-
-" Faster scroll
-set ttyfast
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 
@@ -146,30 +147,6 @@ nmap <leader>g] <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev-error)
 nmap <silent> <leader>gn <Plug>(coc-diagnostic-next-error)
 nnoremap <leader>cr :CocRestart
-
-
-" incremental search
-set incsearch
-" highlight matches
-set hlsearch
-
-" left space above and under the cursor
-set scrolloff=10
-
-" Show all
-"set wildmenu
-
-" ALE
-"let g:ale_fixers = {
-"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-"\   'python': ['autopep8'],
-"\}
-
-let g:ale_completion_enabled = 1
-"set completeopt=menu,menuone,preview,noselect,noinsert
-let g:ale_linters = {'cpp': ['gcc']}
-
-let g:ale_cpp_gcc_options = '-std=c++14 -Wall -I /court/arm/include/QtCore -I /court/arm/include -I /home/ahti/work/courtiusgroup/devices/trueline/gpu_shared'
 
 " Language-specific stuff from your .vimrc file into a file named
 " .vim/ftplugin/language.vim
