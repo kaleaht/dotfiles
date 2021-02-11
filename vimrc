@@ -47,6 +47,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'ericcurtin/CurtineIncSw.vim'
@@ -55,6 +56,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
+Plug 'overcache/NeoSolarized'
 call plug#end()
 
 if executable('ag')
@@ -73,9 +75,10 @@ nnoremap <leader>k :Ag! <C-R><C-W><CR>:cw<CR>
 nnoremap \ :Ag<CR>
 
 " Colors
-set t_Co=16
-set background=dark
-colorscheme solarized
+set termguicolors
+colorscheme NeoSolarized
+"set t_8f=^[[38;2;%lu;%lu;%lum
+"set t_8b=^[[48;2;%lu;%lu;%lum
 
 nnoremap <leader>e :Files<CR>
 
@@ -280,3 +283,12 @@ endfun
 autocmd BufWritePre * :call TrimWhitespace()
 
 let g:go_fmt_command = "goimports"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_code_completion_enabled = 0
+

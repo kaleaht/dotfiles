@@ -150,3 +150,7 @@ fi
 source "/home/ahti/.fzf/shell/key-bindings.zsh"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+
+alias vim="nvim"
+alias vi="nvim"
+alias oldvim="vim"
