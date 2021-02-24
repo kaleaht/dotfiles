@@ -43,7 +43,6 @@ endif
 
 " Plugins
 call plug#begin('~/dotfiles/plugged')
-Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
@@ -57,21 +56,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
 Plug 'overcache/NeoSolarized'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
-if executable('ag')
-	" Use ag over grep
-	set grepprg=ag\ --nogroup\ --nocolor
-	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
-endif
-
 " bind K to grep word under cursor
-nnoremap <leader>k :Ag! <C-R><C-W><CR>:cw<CR>
-"nnoremap K :Ag <C-R><C-W><CR>
+nnoremap <leader>k :Ag <C-R><C-W><CR>
 nnoremap \ :Ag<CR>
 
 " Colors
@@ -81,10 +70,6 @@ colorscheme NeoSolarized
 "set t_8b=^[[48;2;%lu;%lu;%lum
 
 nnoremap <leader>e :Files<CR>
-
-" vimgrep from project folder using the same file extension as the current.
-" buffer
-command! -nargs=1 Se execute 'vimgrep /<args>/ **/*.' . expand('%:e')
 
 " Disable arrow keys
 noremap <up> <nop>
@@ -104,7 +89,7 @@ let g:python_highlight_all=1
 autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
 
 " Open NERDtree
-nnoremap <Leader>f :NERDTreeToggle<Enter>
+nnoremap <Leader>f :Explore<Enter>
 
 " Spell check
 "set spell spelllang=en_us
@@ -195,8 +180,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
