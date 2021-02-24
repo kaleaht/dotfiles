@@ -31,16 +31,6 @@ set path=.,**
 " Add [""]
 nnoremap ," ciw[""]<Esc>p
 
-" Install for vim-plug
-if empty(glob('~/dotfiles/autoload/plug.vim'))
- 	silent !curl -fLo ~/dotfiles/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	if empty(glob('~/.vim/autoload/'))
-		silent !mkdir ~/.vim/autoload/
-	endif
- 	silent !ln -s ~/dotfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source ~/dotfiles/vimrc
-endif
-
 " Plugins
 call plug#begin('~/dotfiles/plugged')
 Plug 'scrooloose/nerdcommenter'
