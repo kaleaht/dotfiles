@@ -79,8 +79,12 @@ ZSH_THEME="gnzh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	zsh-autosuggestions
-	git
+  zsh-autosuggestions
+  git
+  ansible
+  vi-mode
+  zsh-syntax-highlighting
+  rsync
 )
 
 # Color support for tmux
@@ -116,14 +120,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-autoload -U edit-command-line
-# Vi style:
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-
-## Vim mode ##
-bindkey -v
 
 # Edited from https://dougblack.io/words/zsh-vi-mode.html
 function zle-line-init zle-keymap-select {
