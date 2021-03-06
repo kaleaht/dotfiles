@@ -42,3 +42,10 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 echo "vim done!"
 
+echo "Setting up alacritty..."
+ALACRITTY_DIR=$HOME/.config/alacritty
+mkdir -p $ALACRITTY_DIR
+ALACRITTY_LINK=$ALACRITTY_DIR/alacritty.yml
+[ -e $ALACRITTY_LINK ] && rm -i $ALACRITTY_LINK
+[ -L $ALACRITTY_LINK ] || ln -s $DIR/alacritty.yml $ALACRITTY_LINK
+echo "alacritty done!"
