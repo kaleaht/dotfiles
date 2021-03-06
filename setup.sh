@@ -1,16 +1,44 @@
 #!/bin/bash
+set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Making links
+create_file_if_not_exit () {
+  if [ ! -f "$1" ]; then
+    echo "$1 does not exist. We will create it."
+    touch $1
+  fi
+}
 
-# filetype plugin for filetype specific vimrc
-LINK=~/.vim/ftplugin 
-if [ -d $LINK ]
-then
-	echo "ftplugin folder exists. No link crated."
-else
-	ln -s -T ${DIR}/ftplugin ${LINK}
-	echo "ftplugin link crated ${LINK}"
-fi
+append_if_not_exit () {
+  if ! grep -q "$2" $1; then
+    echo "Adding source file to $1"
+    echo $2 >> $1
+  fi
+}
+
+echo "Setting up tmux..."
+TMUX_FILE=$HOME/.tmux.conf
+create_file_if_not_exit $TMUX_FILE
+TMUX_IMPORT="source-file $DIR/tmux.conf"
+append_if_not_exit "$TMUX_FILE" "$TMUX_IMPORT"
+echo "tmux done!"
+
+echo "Setting up zsh..."
+echo "Downloading antigen..."
+curl -L git.io/antigen > $DIR/antigen.zsh
+ZSH_FILE=$HOME/.zshrc
+create_file_if_not_exit $ZSH_FILE
+ZSH_IMPORT="source $DIR/zshrc"
+append_if_not_exit "$ZSH_FILE" "$ZSH_IMPORT"
+echo "zsh done!"
+
+echo "Setting up vim..."
+mkdir -p $HOME/.config/nvim
+NVIM_LINK=$HOME/.config/nvim/init.vim
+[ -L $NVIM_LINK ] || ln -s $DIR/vimrc $NVIM_LINK
+echo "Installing vim plug..."
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+echo "vim done!"
 
