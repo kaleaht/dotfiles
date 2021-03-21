@@ -7,6 +7,14 @@ antigen theme denysdovhan/spaceship-prompt
 antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
 
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "$key[Up]" up-line-or-beginning-search
+bindkey "$key[Down]" down-line-or-beginning-search
+bindkey -M vicmd k up-line-or-beginning-search
+bindkey -M vicmd j down-line-or-beginning-search
+
 # zsh-vi-mode fixes #
 # fzf bindings
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
@@ -22,8 +30,11 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 export EDITOR="vim"
-export SAVEHIST=1000
 export HISTFILE=~/.zsh_history
+export HISTSIZE=10000000
+export SAVEHIST=$HISTSIZE
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
 
 # Use neovim if it is available
 if type nvim > /dev/null; then
@@ -31,6 +42,12 @@ if type nvim > /dev/null; then
   alias vim=nvim
   alias vi=nvim
 fi
-alias ll="ls -lh"
-alias la="ls -a"
-alias lla="ls -lha"
+alias ls="ls --color=auto"
+alias ll="ls -lh --color=auto"
+alias la="ls -a --color=auto"
+alias lla="ls -lha --color=auto"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
