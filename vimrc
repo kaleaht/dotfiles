@@ -27,6 +27,7 @@ set relativenumber
 " Leader key
 let mapleader = ","
 set path=.,**
+set colorcolumn=80
 
 " Add [""]
 nnoremap ," ciw[""]<Esc>p
