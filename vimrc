@@ -27,13 +27,14 @@ set relativenumber
 " Leader key
 let mapleader = ","
 set path=.,**
-set colorcolumn=80
+set colorcolumn=120
 
 " Add [""]
 nnoremap ," ciw[""]<Esc>p
 
 " Plugins
 call plug#begin('~/dotfiles/plugged')
+Plug 'puremourning/vimspector'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
@@ -48,7 +49,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
 Plug 'overcache/NeoSolarized'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'github/copilot.vim'
 call plug#end()
+
+let g:vimspector_enable_mappings = 'HUMAN'
+
 
 " bind K to grep word under cursor
 nnoremap <leader>k :Ag <C-R><C-W><CR>
