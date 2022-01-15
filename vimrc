@@ -65,6 +65,7 @@ set background=dark " or light if you want light mode
 colorscheme gruvbox
 
 nnoremap <leader>e :Files<CR>
+nnoremap <leader>g :GFiles<CR>
 
 " Disable arrow keys
 noremap <up> <nop>
