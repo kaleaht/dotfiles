@@ -40,27 +40,29 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rhysd/vim-clang-format'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
-Plug 'overcache/NeoSolarized'
+Plug 'gruvbox-community/gruvbox'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'github/copilot.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'edkolev/tmuxline.vim'
 call plug#end()
 
 let g:vimspector_enable_mappings = 'HUMAN'
-
 
 " bind K to grep word under cursor
 nnoremap <leader>k :Ag <C-R><C-W><CR>
 nnoremap \ :Ag<CR>
 
 " Colors
-colorscheme NeoSolarized
+set background=dark " or light if you want light mode
+colorscheme gruvbox
 
 nnoremap <leader>e :Files<CR>
 
@@ -85,14 +87,14 @@ autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
 nnoremap <Leader>f :Explore<Enter>
 
 " Spell check
-"set spell spelllang=en_us
+set spell spelllang=en_us
 "hi SpellBad ctermbg=LightGray
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 
 " COC-VIM TAB SETTINGS START
 " TextEdit might fail if hidden is not set.
-set hidden
+"set hidden
 
 " Some servers have issues with backup files, see #649.
 set nowritebackup
@@ -261,13 +263,14 @@ endfun
 
 autocmd BufWritePre * :call TrimWhitespace()
 
-let g:go_fmt_command = "goimports"
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_code_completion_enabled = 0
+"let g:go_fmt_command = "goimports"
+"let g:go_highlight_types = 1
+"let g:go_highlight_fields = 1
+"let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_operators = 1
+"let g:go_highlight_extra_types = 1
+"let g:go_highlight_build_constraints = 1
+"let g:go_code_completion_enabled = 0
 
+let g:airline_powerline_fonts = 1
