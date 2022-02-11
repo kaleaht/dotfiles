@@ -52,6 +52,7 @@ Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'github/copilot.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'edkolev/tmuxline.vim'
+Plug 'chrisbra/csv.vim'
 call plug#end()
 
 let g:vimspector_enable_mappings = 'HUMAN'
