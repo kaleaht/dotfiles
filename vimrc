@@ -68,6 +68,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'numToStr/Comment.nvim'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 let g:tmux_navigator_no_mappings = 1
@@ -109,7 +110,10 @@ noremap <right> <nop>
 autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
 
 " Open NERDtree
-nnoremap <Leader>f <cmd>Explore <cr>
+nnoremap <Leader>f <cmd>NERDTreeToggle <cr>
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 " Spell check
 " set spell spelllang=en_us
