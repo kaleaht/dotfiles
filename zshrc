@@ -5,19 +5,18 @@ antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme denysdovhan/spaceship-prompt
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle agkozak/zsh-z
+antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "$key[Up]" up-line-or-beginning-search
-bindkey "$key[Down]" down-line-or-beginning-search
-bindkey -M vicmd k up-line-or-beginning-search
-bindkey -M vicmd j down-line-or-beginning-search
+bindkey -M viins "^[[A" history-substring-search-up
+bindkey -M viins "^[[B" history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # zsh-vi-mode fixes #
 # fzf bindings
-zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+ zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 # autosuggest accept Ctrl + space
 zvm_after_init_commands+=("bindkey '^ ' autosuggest-accept")
 
@@ -29,7 +28,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000000
 export SAVEHIST=$HISTSIZE
@@ -57,6 +56,5 @@ ls_premission_code() {
   ls -l | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf("%0o ",k);print}'
 }
 alias lsn=ls_premission_code
-
 
 alias open="xdg-open"
