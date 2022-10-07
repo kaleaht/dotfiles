@@ -51,7 +51,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
-Plug 'puremourning/vimspector'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -69,6 +68,17 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'numToStr/Comment.nvim'
 Plug 'preservim/nerdtree'
+
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'leoluz/nvim-dap-go'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'nvim-telescope/telescope-dap.nvim'
+
+Plug 'folke/which-key.nvim'
+
 call plug#end()
 
 let g:tmux_navigator_no_mappings = 1
@@ -111,12 +121,9 @@ autocmd BufWritePost *.tex !pdflatex -shell-escape <afile>
 
 " Open NERDtree
 nnoremap <Leader>f <cmd>NERDTreeToggle <cr>
-" Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 " Spell check
-" set spell spelllang=en_us
+set spell spelllang=en_us
 
 " Some servers have issues with backup files, see #649.
 set nowritebackup
@@ -288,6 +295,7 @@ lua <<EOF
   require('Comment').setup()
 
   local telescope = require('telescope')
+  telescope.load_extension('dap')
   telescope.setup {
     pickers = {
       find_files = {
@@ -295,4 +303,169 @@ lua <<EOF
       }
     }
   }
+
+  local dap = require('dap')
+  dap.adapters.dlv_spawn = function(cb)
+    local stdout = vim.loop.new_pipe(false)
+    local handle
+    local pid_or_err
+    local port = 38697
+    local opts = {
+      stdio = {nil, stdout},
+      args = {"dap", "-l", "127.0.0.1:" .. port},
+      detached = true
+    }
+    handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
+      stdout:close()
+      handle:close()
+      if code ~= 0 then
+        print('dlv exited with code', code)
+      end
+    end)
+    assert(handle, 'Error running dlv: ' .. tostring(pid_or_err))
+    stdout:read_start(function(err, chunk)
+      assert(not err, err)
+      if chunk then
+        vim.schedule(function()
+          --- You could adapt this and send `chunk` to somewhere else
+          require('dap.repl').append(chunk)
+        end)
+      end
+    end)
+    -- Wait for delve to start
+    vim.defer_fn(
+      function()
+        cb({type = "server", host = "127.0.0.1", port = port})
+      end,
+      100)
+  end
+  -- dap.adapters.go = function(callback, config)
+  --   local stdout = vim.loop.new_pipe(false)
+  --   local handle
+  --   local pid_or_err
+  --   local port = 38697
+  --   local opts = {
+  --     stdio = {nil, stdout},
+  --     args = {"dap", "-l", "127.0.0.1:" .. port},
+  --     detached = true
+  --   }
+  --   handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
+  --     -- stdout:close()
+  --     handle:close()
+  --     if code ~= 0 then
+  --       print('dlv exited with code', code)
+  --     end
+  --   end)
+  --   assert(handle, 'Error running dlv: ' .. tostring(pid_or_err))
+  --   stdout:read_start(function(err, chunk)
+  --     assert(not err, err)
+  --     if chunk then
+  --       vim.schedule(function()
+  --         require('dap.repl').append(chunk)
+  --       end)
+  --     end
+  --   end)
+  --   -- Wait for delve to start
+  --   vim.defer_fn(
+  --     function()
+  --       callback({type = "server", host = "127.0.0.1", port = port})
+  --     end,
+  --     100)
+  -- end
+  -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+  dap.configurations.go = {
+    {
+      type = "dlv_spaw",
+      name = "Debug",
+      request = "launch",
+      program = "${file}"
+    },
+    {
+      type = "go",
+      name = "Debug test", -- configuration for debugging test files
+      request = "launch",
+      mode = "test",
+      program = "${file}"
+    },
+    -- works with go.mod packages and sub packages
+    {
+      type = "go",
+      name = "Debug test (go.mod)",
+      request = "launch",
+      mode = "test",
+      program = "./${relativeFileDirname}"
+    },
+    {
+			name= "Launch with custom config",
+			type= "dlv_spawn",
+			request= "launch",
+			mode= "debug",
+			program= "${workspaceFolder}/main.go",
+			cwd= "${workspaceFolder}",
+			tags= "dev",
+			args= {
+				"serve",
+				"default_config.yaml",
+				"config_2.yaml",
+				"../data/20211116_1506/shotmaker.yaml"
+			}
+    }
+  }
+
+
+  require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+  -- require('dap-go').setup()
+
+
+  require("nvim-dap-virtual-text").setup()
+
+  require("dapui").setup({
+    icons = { expanded = "▾", collapsed = "▸" },
+    mappings = {
+      -- Use a table to apply multiple mappings
+      expand = { "<CR>", "<2-LeftMouse>" },
+      open = "o",
+      remove = "d",
+      edit = "e",
+      repl = "r",
+      toggle = "t",
+    },
+    sidebar = {
+      -- You can change the order of elements in the sidebar
+      elements = {
+        -- Provide as ID strings or tables with "id" and "size" keys
+        {
+          id = "scopes",
+          size = 0.25, -- Can be float or integer > 1
+        },
+        { id = "breakpoints", size = 0.25 },
+        { id = "stacks", size = 0.25 },
+        { id = "watches", size = 00.25 },
+      },
+      size = 40,
+      position = "left", -- Can be "left", "right", "top", "bottom"
+    },
+    tray = {
+      elements = { "repl" },
+      size = 10,
+      position = "bottom", -- Can be "left", "right", "top", "bottom"
+    },
+    floating = {
+      max_height = nil, -- These can be integers or a float between 0 and 1.
+      max_width = nil, -- Floats will be treated as percentage of your screen.
+      border = "single", -- Border style. Can be "single", "double" or "rounded"
+      mappings = {
+        close = { "q", "<Esc>" },
+      },
+    },
+    windows = { indent = 1 },
+  })
+  local root = vim.fn.finddir('.git/..', ';')
+  require('dap.ext.vscode').load_launchjs(root .. '/.vim/launch.json') -- parse .vim/launch.json if exists
+  -- require('dap.ext.vscode').load_launchjs(root .. '/.vscode/launch.json') -- parse .vim/launch.json if exists
+
 EOF

@@ -9,6 +9,8 @@ antigen bundle agkozak/zsh-z
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
+# source ~/soft/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 bindkey -M viins "^[[A" history-substring-search-up
 bindkey -M viins "^[[B" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -41,6 +43,7 @@ if type nvim > /dev/null; then
   alias vim=nvim
   alias vi=nvim
 fi
+
 alias ls="ls --color=auto"
 alias ll="ls -lh --color=auto"
 alias la="ls -a --color=auto"
@@ -50,6 +53,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
+alias open="xdg-open"
 
 # ls with premission code
 ls_premission_code() {
@@ -57,4 +61,8 @@ ls_premission_code() {
 }
 alias lsn=ls_premission_code
 
-alias open="xdg-open"
+# pipe to Ctrl+c
+pipe_xclip() {
+  xclip -sel clip
+}
+alias copy=pipe_xclip
