@@ -58,7 +58,6 @@ Plug 'ericcurtin/CurtineIncSw.vim'
 Plug 'mbbill/undotree'
 Plug 'gruvbox-community/gruvbox'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'github/copilot.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'edkolev/tmuxline.vim'
 Plug 'chrisbra/csv.vim'
@@ -101,7 +100,7 @@ nnoremap <leader>e <cmd>Telescope find_files <cr>
 nnoremap <leader>g <cmd>Telescope git_files <cr>
 nnoremap <leader>w <cmd>Telescope grep_string <cr>
 nnoremap ge <cmd>Telescope diagnostics <cr>
-nnoremap \ <cmd>Telescope live_grep <cr>
+nnoremap <leader>\ <cmd>Telescope live_grep <cr>
 
 " Quick fix list moves
 nnoremap <C-k> <cmd>cprevious <cr>
@@ -112,6 +111,9 @@ noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
+
+" greatest remap ever
+xnoremap <leader>p "_dP
 
 " System clipboard
 "set clipboard=unnamed
@@ -147,14 +149,6 @@ else
   set signcolumn=yes
 endif
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -174,8 +168,6 @@ let g:airline_powerline_fonts = 1
 lua <<EOF
 
   require'nvim-treesitter.configs'.setup {
-    -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = "maintained",
 
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -202,17 +194,51 @@ lua <<EOF
         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
-    mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    },
+    mapping = cmp.mapping.preset.insert({
+            ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4)),
+            ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4)),
+            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete()),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<C-n>'] = {
+                c = function(fallback)
+                    local cmp = require('cmp')
+                    if cmp.visible() then
+                        cmp.select_next_item()
+                    else
+                        fallback()
+                    end
+                end,
+            },
+            ['<C-p>'] = {
+                c = function(fallback)
+                    local cmp = require('cmp')
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    else
+                        fallback()
+                    end
+                end,
+            },
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ['<Tab>'] = function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                else
+                    fallback()
+                end
+            end,
+            ['<S-Tab>'] = function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                else
+                    fallback()
+                end
+            end,
+        }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' }, -- For luasnip users.
@@ -434,8 +460,8 @@ lua <<EOF
       repl = "r",
       toggle = "t",
     },
-    sidebar = {
-      -- You can change the order of elements in the sidebar
+    layouts = {
+      -- You can change the order of elements in the layouts
       elements = {
         -- Provide as ID strings or tables with "id" and "size" keys
         {
@@ -449,9 +475,9 @@ lua <<EOF
       size = 40,
       position = "left", -- Can be "left", "right", "top", "bottom"
     },
-    tray = {
+    layouts = {
       elements = { "repl" },
-      size = 10,
+      ize = 10,
       position = "bottom", -- Can be "left", "right", "top", "bottom"
     },
     floating = {
