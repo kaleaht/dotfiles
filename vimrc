@@ -77,6 +77,7 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-telescope/telescope-dap.nvim'
 
 Plug 'folke/which-key.nvim'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 
