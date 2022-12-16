@@ -41,6 +41,8 @@ nnoremap ," ciw[""]<Esc>p
 
 " Plugins
 call plug#begin('~/dotfiles/plugged')
+Plug 'github/copilot.vim'
+
 " auto completion
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -221,15 +223,15 @@ lua <<EOF
                 end,
             },
             ['<CR>'] = cmp.mapping.confirm({ select = true }),
-            ['<Tab>'] = function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    fallback()
-                end
-            end,
+            -- ['<Tab>'] = function(fallback)
+            --     if cmp.visible() then
+            --         cmp.select_next_item()
+            --     elseif luasnip.expand_or_jumpable() then
+            --         luasnip.expand_or_jump()
+            --     else
+            --         fallback()
+            --     end
+            -- end,
             ['<S-Tab>'] = function(fallback)
                 if cmp.visible() then
                     cmp.select_prev_item()
@@ -275,7 +277,7 @@ lua <<EOF
   })
 
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -450,49 +452,49 @@ lua <<EOF
 
   require("nvim-dap-virtual-text").setup()
 
-  require("dapui").setup({
-    icons = { expanded = "▾", collapsed = "▸" },
-    mappings = {
-      -- Use a table to apply multiple mappings
-      expand = { "<CR>", "<2-LeftMouse>" },
-      open = "o",
-      remove = "d",
-      edit = "e",
-      repl = "r",
-      toggle = "t",
-    },
-    layouts = {
-      -- You can change the order of elements in the layouts
-      elements = {
-        -- Provide as ID strings or tables with "id" and "size" keys
-        {
-          id = "scopes",
-          size = 0.25, -- Can be float or integer > 1
-        },
-        { id = "breakpoints", size = 0.25 },
-        { id = "stacks", size = 0.25 },
-        { id = "watches", size = 00.25 },
-      },
-      size = 40,
-      position = "left", -- Can be "left", "right", "top", "bottom"
-    },
-    layouts = {
-      elements = { "repl" },
-      ize = 10,
-      position = "bottom", -- Can be "left", "right", "top", "bottom"
-    },
-    floating = {
-      max_height = nil, -- These can be integers or a float between 0 and 1.
-      max_width = nil, -- Floats will be treated as percentage of your screen.
-      border = "single", -- Border style. Can be "single", "double" or "rounded"
-      mappings = {
-        close = { "q", "<Esc>" },
-      },
-    },
-    windows = { indent = 1 },
-  })
-  local root = vim.fn.finddir('.git/..', ';')
-  require('dap.ext.vscode').load_launchjs(root .. '/.vim/launch.json') -- parse .vim/launch.json if exists
+  -- require("dapui").setup({
+  --   icons = { expanded = "▾", collapsed = "▸" },
+  --   mappings = {
+  --     -- Use a table to apply multiple mappings
+  --     expand = { "<CR>", "<2-LeftMouse>" },
+  --     open = "o",
+  --     remove = "d",
+  --     edit = "e",
+  --     repl = "r",
+  --     toggle = "t",
+  --   },
+  --   layouts = {
+  --     -- You can change the order of elements in the layouts
+  --     elements = {
+  --       -- Provide as ID strings or tables with "id" and "size" keys
+  --       {
+  --         id = "scopes",
+  --         size = 0.25, -- Can be float or integer > 1
+  --       },
+  --       { id = "breakpoints", size = 0.25 },
+  --       { id = "stacks", size = 0.25 },
+  --       { id = "watches", size = 00.25 },
+  --     },
+  --     size = 40,
+  --     position = "left", -- Can be "left", "right", "top", "bottom"
+  --   },
+  --   layouts = {
+  --     elements = { "repl" },
+  --     ize = 10,
+  --     position = "bottom", -- Can be "left", "right", "top", "bottom"
+  --   },
+  --   floating = {
+  --     max_height = nil, -- These can be integers or a float between 0 and 1.
+  --     max_width = nil, -- Floats will be treated as percentage of your screen.
+  --     border = "single", -- Border style. Can be "single", "double" or "rounded"
+  --     mappings = {
+  --       close = { "q", "<Esc>" },
+  --     },
+  --   },
+  --   windows = { indent = 1 },
+  -- })
+  -- local root = vim.fn.finddir('.git/..', ';')
+  -- require('dap.ext.vscode').load_launchjs(root .. '/.vim/launch.json') -- parse .vim/launch.json if exists
   -- require('dap.ext.vscode').load_launchjs(root .. '/.vscode/launch.json') -- parse .vim/launch.json if exists
 
 EOF
