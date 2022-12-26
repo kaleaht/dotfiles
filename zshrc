@@ -3,10 +3,12 @@ DIR=${0:a:h}
 source $DIR/antigen.zsh
 antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen theme denysdovhan/spaceship-prompt
+
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle agkozak/zsh-z
 antigen bundle zsh-users/zsh-history-substring-search
+
+antigen theme spaceship-prompt/spaceship-prompt
 antigen apply
 
 # source ~/soft/zsh-autocomplete/zsh-autocomplete.plugin.zsh
