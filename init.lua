@@ -43,6 +43,9 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  -- Flutter / Dart
+  use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
+
   use 'github/copilot.vim'
 
   -- Debugging
@@ -159,13 +162,19 @@ vim.o.colorcolumn = 120
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.g.nowrap = true
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Quick fix list moves
+vim.keymap.set('n', '<C-j>', ':cnext<CR>', { silent = true })
+vim.keymap.set('n', '<C-k>', ':cprevious<CR>', { silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -177,6 +186,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+require("flutter-tools").setup{}
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
@@ -266,7 +277,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'dart' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -390,7 +401,7 @@ local servers = {
   cmake = {},
 
 
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
@@ -401,9 +412,12 @@ local servers = {
   },
 }
 
+require'lspconfig'.dartls.setup{
+      on_attach = on_attach,
+}
 -- Setup neovim lua configuration
 require('neodev').setup()
---
+
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
